@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  */
 public class MultiPurposeList<T> {
 
-	private Node head;
+	private e head;
 	private Node iterator;
 	private int size;
 	
