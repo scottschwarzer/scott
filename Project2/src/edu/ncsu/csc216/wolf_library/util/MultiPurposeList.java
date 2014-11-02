@@ -67,10 +67,34 @@ public class MultiPurposeList<T> {
 			this.head = new Node(element, null);
 			
 		}
-		
-		if () //add at position?
-			
-	this.size++;	
+
+      if (pos == 0) {
+
+      }
+
+      if (pos == this.size;) {
+         this.addToRear(element);
+      }
+
+		//add at position?
+		int count = 0;
+
+		Node copy = this.head; 
+      Node insert = new Node(
+	   while(copy.next != null){
+         
+         if(count == pos){
+            Node insert = new Node(elment, copy);
+            copy.next = insert;         
+            break;
+         }	
+
+         copy = copy.next;
+         count++;
+         
+      }
+      
+	   this.size++;	
 	}
 	
 	public boolean isEmpty() {
