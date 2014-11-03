@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.ncsu.csc216.wolf_library.util;
+package idk;
 
 import java.util.NoSuchElementException;
 
@@ -32,107 +32,131 @@ public class MultiPurposeList<T> {
 	
 	public boolean hasNext() {
 		
-		if(this.iterator.next == null) return false;
+		if(this.iterator == null) return false;
 		return true;
 		
 	}
 	
 	public Node next() throws NoSuchElementException {
 		
-		if (this.iterator == null || this.iterator.next == null) {
+		if (this.iterator == null) {
 			
 			throw new NoSuchElementException();
 			
 		}
+		
 		Node copy = this.iterator;
 		this.iterator = this.iterator.next;
 		return copy;
 		
 	}
 	
-	public void addItem(int pos, T element) throws Exception {
+	public void addItem(int pos, T element) throws NullPointerException, IndexOutOfBoundsException {
 		
-		if (element == null) {
+		if (element == null) throw new NullPointerException();
 			
-			throw new NullPointerException();
-			
-		}
-		if (pos < 0 || pos > this.size) {
-			
-			throw new IndexOutOfBoundsException();
-			
-		}
+		if (pos < 0 || pos > this.size) throw new IndexOutOfBoundsException();
+		
 		if (this.head == null) {
 			
-			this.head = new Node(element, null);
+			this.head = new Node(element, this.head);
+			
+		} else {
+			
+			if(pos == 0){
+				Node copy = new Node(element, this.head);
+				this.head = copy;
+			} else {
+
+				Node copy = this.head;
+				for (int i = 0; i < pos; i++) {
+					copy = this.next();
+				}
+				copy.next = new Node(element, copy.next);
+			}
 			
 		}
-
-      if (pos == 0) {
-
-      }
-
-      if (pos == this.size;) {
-         this.addToRear(element);
-      }
-
-		//add at position?
-		int count = 0;
-
-		Node copy = this.head; 
-      Node insert = new Node(
-	   while(copy.next != null){
-         
-         if(count == pos){
-            Node insert = new Node(elment, copy);
-            copy.next = insert;         
-            break;
-         }	
-
-         copy = copy.next;
-         count++;
-         
-      }
-      
-	   this.size++;	
+		
+		this.size++;
+		this.resetIterator();
 	}
 	
 	public boolean isEmpty() {
 		
-		if (this.front == null) return true;
+		if (this.head == null) return true;
 		return false;
 		
 	}
 	
-	public lookAtItemN(int pos) throws IndexOutOfBoundsException {
+	public Node lookAtItemN(int pos) throws IndexOutOfBoundsException {
 		
+		if (pos < 0 || pos >= this.size)
+			throw new IndexOutOfBoundsException();
+
+		Node copy = this.head;
+		if (pos == 0) {
+			return copy;
+		} else {
+			
+			for (int i = 0; i < pos; i++) {
+				copy = this.next();
+			}
+		}
+		this.resetIterator();
+		return copy.next;
+	}
+	
+	public void addToRear(T element) throws NullPointerException {
+		try {
+			this.addItem(this.size, element);
+		} catch (Exception e) {
+			throw new NullPointerException();
+		}
+	}
+	
+	public void remove(int pos) throws IndexOutOfBoundsException {
 		if (pos < 0 || pos >= this.size) {
 			
 			throw new IndexOutOfBoundsException();
 			
+		} else {
+			if (pos == 0) {
+				this.head = this.head.next;
+			} else {
+				Node copy = this.head;
+				for (int i = 0; i < pos; i++) {
+					copy = this.next();
+				}
+
+				copy.next = copy.next.next;
+			}
+			this.resetIterator();
+			this.size--;
 		}
-		
 	}
 	
-	public void addToRear(T element) {
-		
-		Node current = this.head;
-		while (current.next != null) {
+	public void moveAheadOne(int pos) throws IndexOutOfBoundsException{
+		if (pos < 0 || pos >= this.size) {
 			
-			current = current.next;
+			throw new IndexOutOfBoundsException();
+			
+		} else {
+			if (pos != 0) {
+				Node n = this.lookAtItemN(pos);
+				Node n2 = n.next;
+				
+				Node copy = n;
+				n = n2.next;
+				n2 = copy;
+				
+				System.out.printf("%d, %d\n",n2.data, n.data);
+				n2.data = copy.data;
+				
+				System.out.printf("%d, %d\n",n2.data, n.data);
+				this.resetIterator();
+			}
 			
 		}
-		current.next = new Node(element, );//position?
-		this.size++;
-		
-	}
-	
-	public remove(int pos) {
-		
-	}
-	
-	public void moveAheadOne(int pos) {
-		
 	}
 	
 	public int size() {
@@ -145,11 +169,11 @@ public class MultiPurposeList<T> {
 
 class Node<T> {
 	
-	private T data;
+	public T data;
 	public Node next;
 	
 	public Node(T element, Node b) {
-		
+		this.data = element;
 		this.next = b;
 		
 	}
