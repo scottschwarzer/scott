@@ -1,7 +1,7 @@
 /**
  * 
  */
-package idk;
+package edu.ncsu.csc216.wolf_library.util;
 
 import java.util.NoSuchElementException;
 
