@@ -6,8 +6,8 @@ package edu.ncsu.csc216.wolf_library.util;
 import java.util.NoSuchElementException;
 
 /**
+ * Creates a generic linked list that will be used for the books
  * @author scottschwarzer
- *
  */
 public class MultiPurposeList<T> {
 
@@ -15,7 +15,9 @@ public class MultiPurposeList<T> {
 	private Node iterator;
 	private int size;
 	
-	//this is a comment that I am testing
+	/**
+	 * Constructor for the list, initializes each field 
+	 */
 	public MultiPurposeList() {
 		
 		this.head = null;
@@ -24,12 +26,19 @@ public class MultiPurposeList<T> {
 		
 	}
 	
+	/**
+	 * Sends the iterator back to the beginning 
+	 */
 	public void resetIterator() {
 		
 		this.iterator = this.head;
 		
 	}
 	
+	/**
+	 * Iterator method that checks if the node is empty
+	 * @return false if empty, true if not empty
+	 */
 	public boolean hasNext() {
 		
 		if(this.iterator == null) return false;
@@ -37,7 +46,12 @@ public class MultiPurposeList<T> {
 		
 	}
 	
-	public Node next() throws NoSuchElementException {
+	/**
+	 * Moves the iterator to the next element in the list 
+	 * @return the element that iterator points to 
+	 * @throws NoSuchElementException if node is null
+	 */
+	public T next() throws NoSuchElementException {
 		
 		if (this.iterator == null) {
 			
@@ -51,6 +65,13 @@ public class MultiPurposeList<T> {
 		
 	}
 	
+	/**
+	 * Adds item to the list 
+	 * @param pos
+	 * @param element
+	 * @throws NullPointerException
+	 * @throws IndexOutOfBoundsException
+	 */
 	public void addItem(int pos, T element) throws NullPointerException, IndexOutOfBoundsException {
 		
 		if (element == null) throw new NullPointerException();
@@ -88,7 +109,7 @@ public class MultiPurposeList<T> {
 		
 	}
 	
-	public Node lookAtItemN(int pos) throws IndexOutOfBoundsException {
+	public T lookAtItemN(int pos) throws IndexOutOfBoundsException {
 		
 		if (pos < 0 || pos >= this.size)
 			throw new IndexOutOfBoundsException();
@@ -114,7 +135,7 @@ public class MultiPurposeList<T> {
 		}
 	}
 	
-	public void remove(int pos) throws IndexOutOfBoundsException {
+	public T remove(int pos) throws IndexOutOfBoundsException {
 		if (pos < 0 || pos >= this.size) {
 			
 			throw new IndexOutOfBoundsException();

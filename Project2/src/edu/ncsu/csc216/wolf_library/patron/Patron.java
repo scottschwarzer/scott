@@ -11,8 +11,23 @@ public class Patron {
 	
 	private int maxCheckedOut;
 	private int numCheckedOut;
+	private String id;
+	private int password;
 	
-	public Patron(String user, String password, int a) {
+	public Patron (String ident, String pass, int maxBooks) throws IllegalArgumentException {
+		
+		String identtrim = ident.replaceAll("\\s","");
+		String passtrim = pass.replaceAll("\\s","");
+		
+		if (identtrim == null || passtrim == null || identtrim.length() == 0 || passtrim.length() == 0
+				|| maxBooks < 1 || identtrim.equals("admin") == true) {
+			throw new IllegalArgumentException();
+		}
+		
+		this.id = identtrim;
+		this.password = passtrim.hashCode();
+		this.maxCheckedOut = maxBooks;
+		
 		
 	}
 	
